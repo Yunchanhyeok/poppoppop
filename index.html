@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>서울특별시 성동구 경계선 표시</title>
+    <link rel="icon" href="./logo.png" type="image/png">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            width: 100%;
+            height: calc(100% - 50px); /* 지도 크기를 설정합니다. */
+            position: absolute;
+            top: 50px; /* 헤더 높이만큼 아래로 이동 */
+            left: 0;
+        }
+        #header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .custom-icon {
+            width: 50px;
+            height: 50px;
+            background: url('./KakaoTalk_20240701_102412109.png') no-repeat center center;
+            background-size: contain;
+        }
+        #videoContainer {
+            display: none;
+            position: fixed;
+            top: 50px;
+            left: 50px;
+            width: 500px; /* 창 크기를 작게 조정 */
+            height: 300px; /* 창 크기를 작게 조정 */
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            z-index: 1000;
+            cursor: move; /* 드래그 기능을 위해 */
+        }
+        #videoContainer video {
+            width: 100%;
+            height: 100%;
+        }
+        #closeButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+    </style>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=zp66m5o9lb"></script>
+    <script>
+        function initMap() {
+            var mapOptions = {
+                center: new naver.maps.LatLng(37.54464, 127.0559),
+                zoom: 13
+            };
+            var map = new naver.maps.Map('map', mapOptions);
+
+            // GeoJSON 파일을 불러와서 경계선 표시
+            fetch('./hangjeongdong_서울특별시.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    // 성동구의 GeoJSON 데이터만 필터링
+                    var seongdongData = {
+                        type: "FeatureCollection",
+                        features: data.features.filter(feature => feature.properties.ADM_DR_NM === '성동구')
+                    };
+
+                    map.data.addGeoJson(seongdongData);
+                    map.data.setStyle({
+                        fillColor: 'blue',
+                        strokeColor: 'blue',
+                        strokeWeight: 2,
+                        fillOpacity: 0.1
+                    });
+                });
+
+            var markerPositions = [
+                new naver.maps.LatLng(37.54464, 127.0559),
+                new naver.maps.LatLng(37.541123, 127.056125)
+            ];
+
+            markerPositions.forEach(function(position) {
+                var marker = new naver.maps.Marker({
+                    position: position,
+                    map: map,
+                    icon: {
+                        content: '<div class="custom-icon"></div>',
+                        size: new naver.maps.Size(50, 50),
+                        anchor: new naver.maps.Point(25, 25)
+                    }
+                });
+
+                naver.maps.Event.addListener(marker, 'click', function() {
+                    var videoContainer = document.getElementById('videoContainer');
+                    var videoPlayer = document.getElementById('videoPlayer');
+                    videoPlayer.src = './nok.mp4';
+                    videoContainer.style.display = 'block';
+                    videoPlayer.play();
+                });
+            });
+        }
+
+        function closeVideo() {
+            var videoContainer = document.getElementById('videoContainer');
+            videoContainer.style.display = 'none';
+            var video = document.getElementById('videoPlayer');
+            video.pause();
+            video.currentTime = 0;
+        }
+
+        window.onload = initMap;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var videoContainer = document.getElementById('videoContainer');
+            var isDragging = false;
+            var dragStartX, dragStartY;
+
+            videoContainer.addEventListener('mousedown', function (e) {
+                isDragging = true;
+                dragStartX = e.clientX - videoContainer.offsetLeft;
+                dragStartY = e.clientY - videoContainer.offsetTop;
+                videoContainer.style.cursor = 'move';
+            });
+
+            document.addEventListener('mousemove', function (e) {
+                if (isDragging) {
+                    videoContainer.style.left = e.clientX - dragStartX + 'px';
+                    videoContainer.style.top = e.clientY - dragStartY + 'px';
+                }
+            });
+
+            document.addEventListener('mouseup', function () {
+                isDragging = false;
+                videoContainer.style.cursor = 'default';
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="header">
+        <img src="./logo.png" alt="Logo">
+    </div>
+    <div id="map"></div>
+    <div id="videoContainer">
+        <button id="closeButton" onclick="closeVideo()">닫기</button>
+        <video id="videoPlayer" controls>
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</body>
+</html>
