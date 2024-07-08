@@ -9,19 +9,24 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            display: flex; /* 화면을 좌우로 나누기 위해 flex 사용 */
+            display: flex;
         }
         #sidebar {
-            width: 20%; /* 사이드바 너비 조정 */
+            width: 50px; /* 원하는 너비로 설정 */
             height: 100%;
-            background: url('/mnt/data/카테고리.png') no-repeat center center;
-            background-size: cover; /* 배경 이미지가 꽉 차도록 설정 */
-            overflow: hidden;
+            background: url('./카테고리.png') no-repeat center center;
+            background-size: cover;
+        }
+        #mapContainer {
+            flex-grow: 1;
+            position: relative;
         }
         #map {
-            width: 80%; /* 나머지 화면을 지도에 사용 */
-            height: 100%;
-            position: relative;
+            width: 100%;
+            height: calc(100% - 50px); /* 지도 크기를 설정합니다. */
+            position: absolute;
+            top: 50px; /* 헤더 높이만큼 아래로 이동 */
+            left: 0;
         }
         #header {
             position: fixed;
@@ -43,12 +48,12 @@
             position: fixed;
             top: 50px;
             left: 50px;
-            width: 500px;
-            height: 300px;
+            width: 500px; /* 창 크기를 작게 조정 */
+            height: 300px; /* 창 크기를 작게 조정 */
             background: rgba(0, 0, 0, 0.8);
             padding: 20px;
             z-index: 1000;
-            cursor: move;
+            cursor: move; /* 드래그 기능을 위해 */
         }
         #videoContainer video {
             width: 100%;
@@ -158,7 +163,12 @@
 </head>
 <body>
     <div id="sidebar"></div>
-    <div id="map"></div>
+    <div id="mapContainer">
+        <div id="header">
+            <img src="./logo.png" alt="Logo">
+        </div>
+        <div id="map"></div>
+    </div>
     <div id="videoContainer">
         <button id="closeButton" onclick="closeVideo()">닫기</button>
         <video id="videoPlayer" controls>
@@ -167,3 +177,4 @@
     </div>
 </body>
 </html>
+
