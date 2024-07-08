@@ -9,13 +9,19 @@
             height: 100%;
             margin: 0;
             padding: 0;
+            display: flex; /* 화면을 좌우로 나누기 위해 flex 사용 */
+        }
+        #sidebar {
+            width: 20%; /* 사이드바 너비 조정 */
+            height: 100%;
+            background: url('/mnt/data/카테고리.png') no-repeat center center;
+            background-size: cover; /* 배경 이미지가 꽉 차도록 설정 */
+            overflow: hidden;
         }
         #map {
-            width: 100%;
-            height: calc(100% - 50px); /* 지도 크기를 설정합니다. */
-            position: absolute;
-            top: 50px; /* 헤더 높이만큼 아래로 이동 */
-            left: 0;
+            width: 80%; /* 나머지 화면을 지도에 사용 */
+            height: 100%;
+            position: relative;
         }
         #header {
             position: fixed;
@@ -37,12 +43,12 @@
             position: fixed;
             top: 50px;
             left: 50px;
-            width: 500px; /* 창 크기를 작게 조정 */
-            height: 300px; /* 창 크기를 작게 조정 */
+            width: 500px;
+            height: 300px;
             background: rgba(0, 0, 0, 0.8);
             padding: 20px;
             z-index: 1000;
-            cursor: move; /* 드래그 기능을 위해 */
+            cursor: move;
         }
         #videoContainer video {
             width: 100%;
@@ -151,9 +157,7 @@
     </script>
 </head>
 <body>
-    <div id="header">
-        <img src="./logo.png" alt="Logo">
-    </div>
+    <div id="sidebar"></div>
     <div id="map"></div>
     <div id="videoContainer">
         <button id="closeButton" onclick="closeVideo()">닫기</button>
