@@ -9,6 +9,17 @@
             height: 100%;
             margin: 0;
             padding: 0;
+            display: flex;
+        }
+        #sidebar {
+            width: 20%; /* 원하는 너비로 설정 */
+            height: 100%;
+            background: url('./카테고리.png') no-repeat center center;
+            background-size: cover;
+        }
+        #mapContainer {
+            flex-grow: 1;
+            position: relative;
         }
         #map {
             width: 100%;
@@ -151,10 +162,13 @@
     </script>
 </head>
 <body>
-    <div id="header">
-        <img src="./logo.png" alt="Logo">
+    <div id="sidebar"></div>
+    <div id="mapContainer">
+        <div id="header">
+            <img src="./logo.png" alt="Logo">
+        </div>
+        <div id="map"></div>
     </div>
-    <div id="map"></div>
     <div id="videoContainer">
         <button id="closeButton" onclick="closeVideo()">닫기</button>
         <video id="videoPlayer" controls>
