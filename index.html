@@ -12,13 +12,18 @@
             display: flex;
         }
         #sidebar {
-            width: 20%; /* 원하는 너비로 설정 */
+            width: 200px; /* 원하는 너비로 설정 */
             height: 100%;
             background: url('./카테고리.png') no-repeat center center;
             background-size: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
         }
         #mapContainer {
             flex-grow: 1;
+            margin-left: 200px; /* sidebar 너비와 맞춤 */
             position: relative;
         }
         #map {
@@ -31,9 +36,10 @@
         #header {
             position: fixed;
             top: 0;
-            width: 100%;
+            left: 200px; /* sidebar 너비와 맞춤 */
+            width: calc(100% - 200px); /* 헤더 너비 조정 */
             background: rgba(255, 255, 255, 0.8);
-            z-index: 1000;
+            z-index: 1002;
             text-align: center;
             padding: 10px 0;
         }
@@ -177,5 +183,4 @@
     </div>
 </body>
 </html>
-
 
