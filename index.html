@@ -9,22 +9,6 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            display: flex;
-        }
-        #sidebar {
-            width: 200px; /* 원하는 너비로 설정 */
-            height: 100%;
-            background: url('./카테고리.png') no-repeat center center;
-            background-size: cover;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1001;
-        }
-        #mapContainer {
-            flex-grow: 1;
-            margin-left: 200px; /* sidebar 너비와 맞춤 */
-            position: relative;
         }
         #map {
             width: 100%;
@@ -36,10 +20,9 @@
         #header {
             position: fixed;
             top: 0;
-            left: 200px; /* sidebar 너비와 맞춤 */
-            width: calc(100% - 200px); /* 헤더 너비 조정 */
+            width: 100%;
             background: rgba(255, 255, 255, 0.8);
-            z-index: 1002;
+            z-index: 1000;
             text-align: center;
             padding: 10px 0;
         }
@@ -168,13 +151,10 @@
     </script>
 </head>
 <body>
-    <div id="sidebar"></div>
-    <div id="mapContainer">
-        <div id="header">
-            <img src="./logo.png" alt="Logo">
-        </div>
-        <div id="map"></div>
+    <div id="header">
+        <img src="./logo.png" alt="Logo">
     </div>
+    <div id="map"></div>
     <div id="videoContainer">
         <button id="closeButton" onclick="closeVideo()">닫기</button>
         <video id="videoPlayer" controls>
