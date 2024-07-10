@@ -44,6 +44,15 @@
             background: url('./default-icon.png') no-repeat center center; /* Placeholder for other markers */
             background-size: contain;
         }
+        .marker-label {
+            position: absolute;
+            background: white;
+            padding: 2px 5px;
+            border: 1px solid black;
+            border-radius: 3px;
+            display: none;
+            z-index: 1001;
+        }
         #videoContainer {
             display: none;
             position: fixed;
@@ -81,11 +90,9 @@
             };
             var map = new naver.maps.Map('map', mapOptions);
 
-            // GeoJSON 파일을 불러와서 경계선 표시
             fetch('./hangjeongdong_서울특별시.geojson')
                 .then(response => response.json())
                 .then(data => {
-                    // 성동구의 GeoJSON 데이터만 필터링
                     var seongdongData = {
                         type: "FeatureCollection",
                         features: data.features.filter(feature => feature.properties.ADM_DR_NM === '성동구')
