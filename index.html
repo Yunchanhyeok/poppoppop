@@ -44,7 +44,7 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            width: 450px; /* 로고 크기를 적당하게 설정 */
+            width: 280px; /* 로고 크기를 적당하게 설정 */
             height: auto;
         }
         #videoContainer {
@@ -110,8 +110,8 @@
             map.data.addGeoJson(geojson);
             map.data.setStyle({
                 strokeColor: 'navy', // 경계선 색깔을 남색으로 변경
-                strokeWeight: 2, // 두께를 얇게 변경
-                strokeOpacity: 0.8, // 투명도를 80%로 변경
+                strokeWeight: 3, // 두께를 얇게 변경
+                strokeOpacity: 0.6, // 투명도를 80%로 변경
                 strokeDasharray: '5, 5',
                 fillOpacity: 0
             });
@@ -146,7 +146,7 @@
                 var label = document.createElement('div');
                 label.className = 'marker-label';
                 label.innerHTML = `${loc.name}<br>${loc.date}`;
-                document.body.appendChild(label);
+                map.getPanes().floatPane.appendChild(label); // 수정된 부분
 
                 naver.maps.Event.addListener(marker, 'mouseover', function(e) {
                     var markerPosition = e.overlay.getPosition();
