@@ -9,19 +9,13 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            display: flex; /* 화면을 좌우로 나누기 위해 flex 사용 */
-        }
-        #sidebar {
-            width: 20%; /* 사이드바 너비 조정 */
-            height: 100%;
-            background: url('/mnt/data/카테고리.png') no-repeat center center;
-            background-size: cover; /* 배경 이미지가 꽉 차도록 설정 */
-            overflow: hidden;
         }
         #map {
-            width: 80%; /* 나머지 화면을 지도에 사용 */
-            height: 100%;
-            position: relative;
+            width: 100%;
+            height: calc(100% - 50px);
+            position: absolute;
+            top: 50px;
+            left: 0;
         }
         #header {
             position: fixed;
@@ -37,6 +31,15 @@
             height: 50px;
             background: url('./KakaoTalk_20240701_102412109.png') no-repeat center center;
             background-size: contain;
+        }
+        .marker-label {
+            position: absolute;
+            background: white;
+            padding: 2px 5px;
+            border: 1px solid black;
+            border-radius: 3px;
+            display: none;
+            z-index: 1001;
         }
         #videoContainer {
             display: none;
@@ -75,11 +78,9 @@
             };
             var map = new naver.maps.Map('map', mapOptions);
 
-            // GeoJSON 파일을 불러와서 경계선 표시
             fetch('./hangjeongdong_서울특별시.geojson')
                 .then(response => response.json())
                 .then(data => {
-                    // 성동구의 GeoJSON 데이터만 필터링
                     var seongdongData = {
                         type: "FeatureCollection",
                         features: data.features.filter(feature => feature.properties.ADM_DR_NM === '성동구')
@@ -94,20 +95,46 @@
                     });
                 });
 
-            var markerPositions = [
-                new naver.maps.LatLng(37.54464, 127.0559),
-                new naver.maps.LatLng(37.541123, 127.056125)
+            var locations = [
+                {lat: 37.5447481, lng: 127.0582071, name: '아사히', date: '7월 6 ~ 21'},
+                {lat: 37.5412342, lng: 127.0599115, name: '달달팩토리', date: '7월 5 ~ 14'},
+                {lat: 37.5410072, lng: 127.0612158, name: '니콘', date: '6.28~7.7'},
+                {lat: 37.5448952, lng: 127.0534542, name: '스테이씨', date: '6.28 ~ 7.7'},
+                {lat: 37.5444780, lng: 127.0539359, name: '샤넬 코코크러쉬', date: '7.4 ~ 7.23'},
+                {lat: 37.5447829, lng: 127.0593565, name: '페어리', date: '7.5 ~ 14'},
+                {lat: 37.5447829, lng: 127.0593565, name: 'psg', date: '6.28 ~ 7.25'},
+                {lat: 37.5431150, lng: 127.0534919, name: '숄 (scholl)', date: '6.19 ~ 7.11'},
+                {lat: 37.5428664, lng: 127.0533073, name: '코탈리에', date: '6.30 ~ 7.14'},
+                {lat: 37.5428664, lng: 127.0533073, name: '컴젠', date: '7.1 ~ 7.14'},
+                {lat: 37.5469822, lng: 127.0495597, name: '기아 ev', date: '6.20 ~ 7.14'},
+                {lat: 37.5417012, lng: 127.0582575, name: '어퓨', date: '7.3 ~ 7.16'},
+                {lat: 37.5444425, lng: 127.0554581, name: '유브이', date: '7.4 ~ 7.7'}
             ];
 
-            markerPositions.forEach(function(position) {
+            locations.forEach(function(loc) {
                 var marker = new naver.maps.Marker({
-                    position: position,
+                    position: new naver.maps.LatLng(loc.lat, loc.lng),
                     map: map,
                     icon: {
                         content: '<div class="custom-icon"></div>',
-                        size: new naver.maps.Size(50, 50),
-                        anchor: new naver.maps.Point(25, 25)
+                        size: new naver.maps.Size(30, 30), // Reduced size for the placeholder icon
+                        anchor: new naver.maps.Point(15, 15)
                     }
+                });
+
+                var label = document.createElement('div');
+                label.className = 'marker-label';
+                label.textContent = loc.name;
+                document.body.appendChild(label);
+
+                naver.maps.Event.addListener(marker, 'mouseover', function(e) {
+                    label.style.display = 'block';
+                    label.style.left = e.offset.x + 'px';
+                    label.style.top = e.offset.y + 'px';
+                });
+
+                naver.maps.Event.addListener(marker, 'mouseout', function() {
+                    label.style.display = 'none';
                 });
 
                 naver.maps.Event.addListener(marker, 'click', function() {
@@ -116,6 +143,10 @@
                     videoPlayer.src = './nok.mp4';
                     videoContainer.style.display = 'block';
                     videoPlayer.play();
+                });
+
+                naver.maps.Event.addListener(marker, 'mouseover', function() {
+                    label.innerHTML = ${loc.name} <br> ${loc.date};
                 });
             });
         }
@@ -157,7 +188,9 @@
     </script>
 </head>
 <body>
-    <div id="sidebar"></div>
+    <div id="header">
+        <img src="./logo.png" alt="Logo">
+    </div>
     <div id="map"></div>
     <div id="videoContainer">
         <button id="closeButton" onclick="closeVideo()">닫기</button>
