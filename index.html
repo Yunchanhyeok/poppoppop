@@ -12,19 +12,10 @@
         }
         #map {
             width: 100%;
-            height: calc(100% - 50px);
+            height: 100%;
             position: absolute;
-            top: 50px;
-            left: 0;
-        }
-        #header {
-            position: fixed;
             top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            z-index: 1000;
-            text-align: center;
-            padding: 10px 0;
+            left: 0;
         }
         .custom-icon {
             width: 30px;
@@ -46,6 +37,13 @@
             position: absolute;
             transform: translate(-50%, -100%);
             text-align: center;
+        }
+        #logo {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
         }
         #videoContainer {
             display: none;
@@ -109,9 +107,9 @@
 
             map.data.addGeoJson(geojson);
             map.data.setStyle({
-                strokeColor: 'blue',
+                strokeColor: 'skyblue', // 경계선 색깔을 하늘색으로 변경
                 strokeWeight: 2, // 두께를 얇게 변경
-                strokeOpacity: 0.5, // 경계선을 연하게 변경
+                strokeOpacity: 0.4, // 투명도를 40%로 변경
                 fillOpacity: 0
             });
 
@@ -208,10 +206,8 @@
     </script>
 </head>
 <body>
-    <div id="header">
-        <img src="./logo.png" alt="Logo">
-    </div>
     <div id="map"></div>
+    <img id="logo" src="./logo.png" alt="Logo">
     <div id="videoContainer">
         <button id="closeButton" onclick="closeVideo()">닫기</button>
         <video id="videoPlayer" controls>
