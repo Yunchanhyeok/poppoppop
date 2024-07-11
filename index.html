@@ -109,6 +109,7 @@
             map.data.setStyle({
                 strokeColor: 'navy',
                 strokeWeight: 3,
+                strokeOpacity: 0.6,
                 fillOpacity: 0
             });
 
@@ -144,18 +145,27 @@
                 label.innerHTML = `${loc.name}<br>${loc.date}`;
                 document.body.appendChild(label);
 
-                naver.maps.Event.addListener(marker, 'mouseover', function(e) {
+                var showLabel = function(e) {
                     var markerPosition = e.overlay.getPosition();
                     var projection = map.getProjection();
                     var point = projection.fromCoordToOffset(markerPosition);
                     label.style.left = (point.x - label.offsetWidth / 2) + 'px';
                     label.style.top = (point.y - label.offsetHeight - 10) + 'px';
                     label.style.display = 'block';
+                };
+
+                var hideLabel = function() {
+                    label.style.display = 'none';
+                };
+
+                naver.maps.Event.addListener(marker, 'mouseover', showLabel);
+                naver.maps.Event.addListener(marker, 'mouseout', hideLabel);
+
+                label.addEventListener('mouseover', function() {
+                    label.style.display = 'block';
                 });
 
-                naver.maps.Event.addListener(marker, 'mouseout', function() {
-                    label.style.display = 'none';
-                });
+                label.addEventListener('mouseout', hideLabel);
 
                 naver.maps.Event.addListener(marker, 'click', function() {
                     var videoContainer = document.getElementById('videoContainer');
