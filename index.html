@@ -44,7 +44,7 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            width: 50px; /* 로고 크기를 줄이기 */
+            width: 20px; /* 로고 크기를 더 줄이기 */
             height: auto;
         }
         #videoContainer {
@@ -111,7 +111,8 @@
             map.data.setStyle({
                 strokeColor: 'skyblue', // 경계선 색깔을 하늘색으로 변경
                 strokeWeight: 2, // 두께를 얇게 변경
-                strokeOpacity: 0.4, // 투명도를 40%로 변경
+                strokeOpacity: 0.8, // 투명도를 80%로 변경
+                strokeDasharray: [5, 5], // 점선으로 변경
                 fillOpacity: 0
             });
 
