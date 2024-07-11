@@ -12,19 +12,17 @@
         }
         #map {
             width: 100%;
-            height: calc(100% - 50px);
+            height: 100%;
             position: absolute;
-            top: 50px;
+            top: 0;
             left: 0;
         }
-        #header {
+        #logo {
             position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0);
-            z-index: 1000;
-            text-align: center;
-            padding: 10px 0;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001;
         }
         .custom-icon {
             width: 30px;
@@ -111,7 +109,7 @@
             map.data.setStyle({
                 strokeColor: 'navy',
                 strokeWeight: 3,
-                fillOpacity: 0.6
+                fillOpacity: 0
             });
 
             var locations = [
@@ -207,10 +205,8 @@
     </script>
 </head>
 <body>
-    <div id="header">
-        <img src="./logo.png" alt="Logo" style="height: 30px;">
-    </div>
     <div id="map"></div>
+    <img id="logo" src="./logo.png" alt="Logo" style="height: 50px;">
     <div id="videoContainer">
         <button id="closeButton" onclick="closeVideo()">닫기</button>
         <video id="videoPlayer" controls>
@@ -219,6 +215,5 @@
     </div>
 </body>
 </html>
-
 
 
