@@ -21,7 +21,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0);
             z-index: 1000;
             text-align: center;
             padding: 10px 0;
@@ -111,7 +111,7 @@
             map.data.setStyle({
                 strokeColor: 'navy',
                 strokeWeight: 3,
-                fillOpacity: 0
+                fillOpacity: 0.6
             });
 
             var locations = [
@@ -208,7 +208,7 @@
 </head>
 <body>
     <div id="header">
-        <img src="./logo.png" alt="Logo">
+        <img src="./logo.png" alt="Logo" style="height: 30px;">
     </div>
     <div id="map"></div>
     <div id="videoContainer">
