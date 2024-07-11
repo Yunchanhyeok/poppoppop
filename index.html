@@ -25,8 +25,8 @@
             z-index: 1001;
         }
         .custom-icon, .kakao-icon {
-            width: 30px;
-            height: 30px;
+            width: 35px; /* 기존 30px에서 35px로 크기 증가 */
+            height: 35px;
         }
         .custom-icon {
             background: url('./free-icon-placeholder-149060.png') no-repeat center center;
@@ -115,7 +115,7 @@
             map.data.addGeoJson(geojson);
             map.data.setStyle(function(feature) {
                 return {
-                    strokeColor: 'navy',
+                    strokeColor: 'dodgerblue', // 스크린샷에 보이는 파란 점선과 유사한 색상
                     strokeWeight: 2,
                     strokeOpacity: 0.6,
                     strokeLineCap: 'round',
@@ -147,8 +147,8 @@
                     map: map,
                     icon: {
                         content: '<div class="custom-icon"></div>',
-                        size: new naver.maps.Size(30, 30),
-                        anchor: new naver.maps.Point(15, 15)
+                        size: new naver.maps.Size(35, 35),
+                        anchor: new naver.maps.Point(17.5, 17.5)
                     }
                 });
 
@@ -191,8 +191,8 @@
                     map: map,
                     icon: {
                         content: '<div class="kakao-icon"><img src="./KakaoTalk_20240701_102412109.png" alt="Kakao Icon"></div>',
-                        size: new naver.maps.Size(30, 30),
-                        anchor: new naver.maps.Point(15, 15)
+                        size: new naver.maps.Size(35, 35), // 기존 30px에서 35px로 크기 증가
+                        anchor: new naver.maps.Point(17.5, 17.5)
                     }
                 });
 
@@ -253,5 +253,3 @@
     </div>
 </body>
 </html>
-
-
