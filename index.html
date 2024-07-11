@@ -27,8 +27,8 @@
             padding: 10px 0;
         }
         .custom-icon {
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
             background: url('./free-icon-placeholder-149060.png') no-repeat center center;
             background-size: contain;
         }
@@ -38,8 +38,13 @@
             padding: 2px 5px;
             border: 1px solid black;
             border-radius: 3px;
-            display: none;
             z-index: 1001;
+            white-space: nowrap;
+        }
+        .marker-container {
+            position: absolute;
+            transform: translate(-50%, -100%);
+            text-align: center;
         }
         #videoContainer {
             display: none;
@@ -78,22 +83,36 @@
             };
             var map = new naver.maps.Map('map', mapOptions);
 
-            fetch('./hangjeongdong_서울특별시.geojson')
-                .then(response => response.json())
-                .then(data => {
-                    var seongdongData = {
-                        type: "FeatureCollection",
-                        features: data.features.filter(feature => feature.properties.ADM_DR_NM === '성동구')
-                    };
+            var geojson = {
+                "type": "FeatureCollection",
+                "features": [
+                    {"type":"Feature","properties":{"code":"1104052","name":"왕십리2동","name_eng":"Wangsimni2-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.02881029425372,37.56219283885279],[127.03561589657578,37.55972046367032],[127.03317021264617,37.557535964298836],[127.02641482968563,37.555100044382016],[127.02496143707425,37.555070476260596],[127.02543927809438,37.55794684669695],[127.02881029425372,37.56219283885279]]]}},
+                    {"type":"Feature","properties":{"code":"1104071","name":"왕십리도선동","name_eng":"Wangsimnidoseondong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.02547266349976,37.568943552237734],[127.03441607722651,37.56734769610815],[127.0386012834359,37.56324118303603],[127.03561589657578,37.55972046367032],[127.02881029425372,37.56219283885279],[127.02571971403893,37.56237200595601],[127.02547266349976,37.568943552237734]]]}},
+                    {"type":"Feature","properties":{"code":"1104054","name":"마장동","name_eng":"Majang-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.03441607722651,37.56734769610815],[127.0442866611438,37.57022476304866],[127.05033815789268,37.56258685480565],[127.04093190825373,37.560051148719424],[127.0386012834359,37.56324118303603],[127.03441607722651,37.56734769610815]]]}},
+                    {"type":"Feature","properties":{"code":"1104055","name":"사근동","name_eng":"Sageun-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.05033815789268,37.56258685480565],[127.0514303790941,37.54983424269092],[127.0419405164648,37.550116538648254],[127.04112098106465,37.55105760610398],[127.04093190825373,37.560051148719424],[127.05033815789268,37.56258685480565]]]}},
+                    {"type":"Feature","properties":{"code":"1104056","name":"행당1동","name_eng":"Haengdang 1(il)-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.04093190825373,37.560051148719424],[127.04112098106465,37.55105760610398],[127.03638536612797,37.552060104238336],[127.03317021264617,37.557535964298836],[127.03561589657578,37.55972046367032],[127.0386012834359,37.56324118303603],[127.04093190825373,37.560051148719424]]]}},
+                    {"type":"Feature","properties":{"code":"1104057","name":"행당2동","name_eng":"Haengdang 2(i)-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.03317021264617,37.557535964298836],[127.03638536612797,37.552060104238336],[127.03161527459466,37.551112677305646],[127.02641482968563,37.555100044382016],[127.03317021264617,37.557535964298836]]]}},
+                    {"type":"Feature","properties":{"code":"1104058","name":"응봉동","name_eng":"Eungbong-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.04112098106465,37.55105760610398],[127.0419405164648,37.550116538648254],[127.03332644039448,37.54376916686942],[127.0325031932954,37.54347173295896],[127.03108080873425,37.54630461902222],[127.03161527459466,37.551112677305646],[127.03638536612797,37.552060104238336],[127.04112098106465,37.55105760610398]]]}},
+                    {"type":"Feature","properties":{"code":"1104059","name":"금호1가동","name_eng":"Geumho1Gadong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.02641482968563,37.555100044382016],[127.03161527459466,37.551112677305646],[127.03108080873425,37.54630461902222],[127.02797164375131,37.54551348265755],[127.02156783719565,37.55454166901442],[127.02147485248447,37.55470134631616],[127.02496143707425,37.555070476260596],[127.02641482968563,37.555100044382016]]]}},
+                    {"type":"Feature","properties":{"code":"1104072","name":"금호2·3가동","name_eng":"Geumho2·3Gadong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.01840977049235,37.55021321178888],[127.02156783719565,37.55454166901442],[127.02797164375131,37.54551348265755],[127.01655715866544,37.5452982477022],[127.01531116335084,37.54714563110038],[127.01840977049235,37.55021321178888]]]}},
+                    {"type":"Feature","properties":{"code":"1104062","name":"금호4가동","name_eng":"Geumho4Gadong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.03108080873425,37.54630461902222],[127.0325031932954,37.54347173295896],[127.03038815978167,37.5357278833247],[127.02780424413358,37.53506389757521],[127.01655715866544,37.5452982477022],[127.02797164375131,37.54551348265755],[127.03108080873425,37.54630461902222]]]}},
+                    {"type":"Feature","properties":{"code":"1104073","name":"옥수동","name_eng":"Oksu-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.01655715866544,37.5452982477022],[127.02780424413358,37.53506389757521],[127.0236688023869,37.53273057382971],[127.02302831890559,37.53231899582663],[127.01070894177482,37.54118048964762],[127.01531116335084,37.54714563110038],[127.01655715866544,37.5452982477022]]]}},
+                    {"type":"Feature","properties":{"code":"1104066","name":"성수1가2동","name_eng":"Seongsu1(il)-ga2(i)-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.0514303790941,37.54983424269092],[127.05462330278465,37.54888983482399],[127.05428937677937,37.548038727406755],[127.05169136196308,37.54137172191689],[127.03332644039448,37.54376916686942],[127.0419405164648,37.550116538648254],[127.0514303790941,37.54983424269092]]]}},
+                    {"type":"Feature","properties":{"code":"1104065","name":"성수1가1동","name_eng":"Seongsu1(il)-ga1(il)-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.03332644039448,37.54376916686942],[127.05169136196308,37.54137172191689],[127.05398956224661,37.54067380821677],[127.05116490008963,37.52975116557232],[127.04806779588436,37.52970198575087],[127.03038815978167,37.5357278833247],[127.0325031932954,37.54347173295896],[127.03332644039448,37.54376916686942]]]}},
+                    {"type":"Feature","properties":{"code":"1104068","name":"성수2가3동","name_eng":"Seongsu 2(i)-ga 3(sam)-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.05428937677937,37.548038727406755],[127.06960722287567,37.5455119418482],[127.06605125785352,37.5393509643853],[127.06493409473056,37.537386321334516],[127.05398956224661,37.54067380821677],[127.05169136196308,37.54137172191689],[127.05428937677937,37.548038727406755]]]}},
+                    {"type":"Feature","properties":{"code":"1104067","name":"성수2가1동","name_eng":"Seongsu 2(i)-ga1(il)-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.05398956224661,37.54067380821677],[127.06493409473056,37.537386321334516],[127.05867359288398,37.52629974922568],[127.05116490008963,37.52975116557232],[127.05398956224661,37.54067380821677]]]}},
+                    {"type":"Feature","properties":{"code":"1104070","name":"용답동","name_eng":"Yongdap-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.0442866611438,37.57022476304866],[127.05894492301329,37.56096871780013],[127.05988210593183,37.56022176974732],[127.07421053024362,37.55724769712085],[127.07580697427795,37.556641581290656],[127.05462330278465,37.54888983482399],[127.0514303790941,37.54983424269092],[127.05033815789268,37.56258685480565],[127.0442866611438,37.57022476304866]]]}},
+                    {"type":"Feature","properties":{"code":"1104069","name":"송정동","name_eng":"Songjeong-dong","base_year":"2013"},"geometry":{"type":"Polygon","coordinates":[[[127.05428937677937,37.548038727406755],[127.05462330278465,37.54888983482399],[127.07580697427795,37.556641581290656],[127.06960722287567,37.5455119418482],[127.05428937677937,37.548038727406755]]]}}
+                ]
+            };
 
-                    map.data.addGeoJson(seongdongData);
-                    map.data.setStyle({
-                        fillColor: 'blue',
-                        strokeColor: 'blue',
-                        strokeWeight: 2,
-                        fillOpacity: 0.1
-                    });
-                });
+            map.data.addGeoJson(geojson);
+            map.data.setStyle({
+                fillColor: 'blue',
+                strokeColor: 'blue',
+                strokeWeight: 2,
+                fillOpacity: 0.1
+            });
 
             var locations = [
                 {lat: 37.5447481, lng: 127.0582071, name: '아사히', date: '7월 6 ~ 21'},
@@ -112,29 +131,20 @@
             ];
 
             locations.forEach(function(loc) {
+                var markerContainer = document.createElement('div');
+                markerContainer.className = 'marker-container';
+                markerContainer.innerHTML = `
+                    <div class="custom-icon"></div>
+                    <div class="marker-label">${loc.name}<br>${loc.date}</div>
+                `;
                 var marker = new naver.maps.Marker({
                     position: new naver.maps.LatLng(loc.lat, loc.lng),
                     map: map,
                     icon: {
-                        content: '<div class="custom-icon"></div>',
-                        size: new naver.maps.Size(50, 50),
-                        anchor: new naver.maps.Point(25, 25)
+                        content: markerContainer,
+                        size: new naver.maps.Size(30, 30),
+                        anchor: new naver.maps.Point(15, 15)
                     }
-                });
-
-                var label = document.createElement('div');
-                label.className = 'marker-label';
-                label.textContent = loc.name;
-                document.body.appendChild(label);
-
-                naver.maps.Event.addListener(marker, 'mouseover', function(e) {
-                    label.style.display = 'block';
-                    label.style.left = e.offset.x + 'px';
-                    label.style.top = e.offset.y + 'px';
-                });
-
-                naver.maps.Event.addListener(marker, 'mouseout', function() {
-                    label.style.display = 'none';
                 });
 
                 naver.maps.Event.addListener(marker, 'click', function() {
@@ -143,10 +153,6 @@
                     videoPlayer.src = './nok.mp4';
                     videoContainer.style.display = 'block';
                     videoPlayer.play();
-                });
-
-                naver.maps.Event.addListener(marker, 'mouseover', function() {
-                    label.innerHTML = `${loc.name} <br> ${loc.date}`;
                 });
             });
         }
@@ -200,5 +206,4 @@
     </div>
 </body>
 </html>
-
 
