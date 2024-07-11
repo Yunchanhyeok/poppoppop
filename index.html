@@ -38,6 +38,7 @@
             padding: 2px 5px;
             border: 1px solid black;
             border-radius: 3px;
+            display: none;
             z-index: 1001;
             white-space: nowrap;
         }
@@ -108,10 +109,9 @@
 
             map.data.addGeoJson(geojson);
             map.data.setStyle({
-                fillColor: 'blue',
                 strokeColor: 'blue',
-                strokeWeight: 2,
-                fillOpacity: 0.1
+                strokeWeight: 4,
+                fillOpacity: 0
             });
 
             var locations = [
@@ -131,20 +131,33 @@
             ];
 
             locations.forEach(function(loc) {
-                var markerContainer = document.createElement('div');
-                markerContainer.className = 'marker-container';
-                markerContainer.innerHTML = `
-                    <div class="custom-icon"></div>
-                    <div class="marker-label">${loc.name}<br>${loc.date}</div>
-                `;
                 var marker = new naver.maps.Marker({
                     position: new naver.maps.LatLng(loc.lat, loc.lng),
                     map: map,
                     icon: {
-                        content: markerContainer,
+                        content: '<div class="custom-icon"></div>',
                         size: new naver.maps.Size(30, 30),
                         anchor: new naver.maps.Point(15, 15)
                     }
+                });
+
+                var label = document.createElement('div');
+                label.className = 'marker-label';
+                label.innerHTML = `${loc.name}<br>${loc.date}`;
+                document.body.appendChild(label);
+
+                naver.maps.Event.addListener(marker, 'mouseover', function(e) {
+                    var markerPosition = e.overlay.getPosition();
+                    var markerOffset = e.overlay.getIcon().size;
+                    var projection = map.getProjection();
+                    var point = projection.fromCoordToOffset(markerPosition);
+                    label.style.left = (point.x - markerOffset.width / 2) + 'px';
+                    label.style.top = (point.y - markerOffset.height) + 'px';
+                    label.style.display = 'block';
+                });
+
+                naver.maps.Event.addListener(marker, 'mouseout', function() {
+                    label.style.display = 'none';
                 });
 
                 naver.maps.Event.addListener(marker, 'click', function() {
@@ -206,4 +219,5 @@
     </div>
 </body>
 </html>
+
 
