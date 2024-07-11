@@ -24,16 +24,17 @@
             transform: translateX(-50%);
             z-index: 1001;
         }
-        .custom-icon, .kakao-icon {
+        .custom-icon {
             width: 30px;
             height: 30px;
+            background: url('./free-icon-placeholder-149060.png') no-repeat center center;
             background-size: contain;
         }
-        .custom-icon {
-            background: url('./free-icon-placeholder-149060.png') no-repeat center center;
-        }
         .kakao-icon {
+            width: 30px;
+            height: 30px;
             background: url('./KakaoTalk_20240701_102412109.png') no-repeat center center;
+            background-size: contain;
         }
         .marker-label {
             position: absolute;
@@ -189,7 +190,7 @@
                     position: new naver.maps.LatLng(loc.lat, loc.lng),
                     map: map,
                     icon: {
-                        content: '<div class="kakao-icon"></div>',
+                        url: './KakaoTalk_20240701_102412109.png',
                         size: new naver.maps.Size(30, 30),
                         anchor: new naver.maps.Point(15, 15)
                     }
