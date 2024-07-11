@@ -32,9 +32,9 @@
         }
         .marker-label {
             position: absolute;
-            background: white;
-            padding: 2px 5px;
-            border: 1px solid black;
+            background: navy;
+            color: white;
+            padding: 5px;
             border-radius: 3px;
             display: none;
             z-index: 1001;
@@ -146,11 +146,10 @@
 
                 naver.maps.Event.addListener(marker, 'mouseover', function(e) {
                     var markerPosition = e.overlay.getPosition();
-                    var markerOffset = e.overlay.getIcon().size;
                     var projection = map.getProjection();
                     var point = projection.fromCoordToOffset(markerPosition);
-                    label.style.left = (point.x - markerOffset.width / 2) + 'px';
-                    label.style.top = (point.y - markerOffset.height) + 'px';
+                    label.style.left = (point.x - label.offsetWidth / 2) + 'px';
+                    label.style.top = (point.y - label.offsetHeight - 10) + 'px';
                     label.style.display = 'block';
                 });
 
@@ -215,5 +214,4 @@
     </div>
 </body>
 </html>
-
 
