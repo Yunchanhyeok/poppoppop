@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
     <meta charset="utf-8">
     <title>서울특별시 성동구 경계선 표시</title>
@@ -39,6 +39,7 @@
             display: none;
             z-index: 1001;
             white-space: nowrap;
+            transform: translate(-50%, -100%);
         }
         .marker-container {
             position: absolute;
@@ -155,7 +156,7 @@
                     var projection = map.getProjection();
                     var point = projection.fromCoordToOffset(markerPosition);
                     label.style.left = (point.x - label.offsetWidth / 2) + 'px';
-                    label.style.top = (point.y - label.offsetHeight - 10) + 'px';
+                    label.style.top = (point.y - 40) + 'px'; // 아이콘 바로 위에 표시
                     label.style.display = 'block';
                 };
 
