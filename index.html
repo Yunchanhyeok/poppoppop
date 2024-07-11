@@ -106,11 +106,16 @@
             };
 
             map.data.addGeoJson(geojson);
-            map.data.setStyle({
-                strokeColor: 'navy',
-                strokeWeight: 3,
-                strokeOpacity: 0.6,
-                fillOpacity: 0
+            map.data.setStyle(function(feature) {
+                return {
+                    strokeColor: 'navy',
+                    strokeWeight: 3,
+                    strokeOpacity: 0.6,
+                    strokeLineCap: 'round',
+                    strokeLineJoin: 'round',
+                    strokeDashArray: [10, 5], // 점선 스타일
+                    fillOpacity: 0
+                };
             });
 
             var locations = [
