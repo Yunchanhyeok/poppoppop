@@ -24,11 +24,16 @@
             transform: translateX(-50%);
             z-index: 1001;
         }
-        .custom-icon {
+        .custom-icon, .kakao-icon {
             width: 30px;
             height: 30px;
-            background: url('./free-icon-placeholder-149060.png') no-repeat center center;
             background-size: contain;
+        }
+        .custom-icon {
+            background: url('./free-icon-placeholder-149060.png') no-repeat center center;
+        }
+        .kakao-icon {
+            background: url('./KakaoTalk_20240701_102412109.png') no-repeat center center;
         }
         .marker-label {
             position: absolute;
@@ -110,11 +115,11 @@
             map.data.setStyle(function(feature) {
                 return {
                     strokeColor: 'navy',
-                    strokeWeight: 3,
+                    strokeWeight: 2,
                     strokeOpacity: 0.6,
                     strokeLineCap: 'round',
                     strokeLineJoin: 'round',
-                    strokeDashArray: [10, 5], // 점선 스타일
+                    strokeDashArray: [8, 4], // 점선 스타일
                     fillOpacity: 0
                 };
             });
@@ -172,6 +177,23 @@
                 });
 
                 label.addEventListener('mouseout', hideLabel);
+            });
+
+            var kakaoLocations = [
+                {lat: 37.543530, lng: 127.051973},
+                {lat: 37.541203, lng: 127.059425}
+            ];
+
+            kakaoLocations.forEach(function(loc) {
+                var marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(loc.lat, loc.lng),
+                    map: map,
+                    icon: {
+                        content: '<div class="kakao-icon"></div>',
+                        size: new naver.maps.Size(30, 30),
+                        anchor: new naver.maps.Point(15, 15)
+                    }
+                });
 
                 naver.maps.Event.addListener(marker, 'click', function() {
                     var videoContainer = document.getElementById('videoContainer');
@@ -230,4 +252,5 @@
     </div>
 </body>
 </html>
+
 
