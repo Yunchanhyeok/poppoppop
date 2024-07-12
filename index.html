@@ -141,7 +141,6 @@
                 {lat: 37.5423108, lng: 127.0577364, name: '새우', date: '6/5 ~ 6/23'},
                 {lat: 37.5432681, lng: 127.0529768, name: '힌스', date: '6/14 ~ 6/23'},
                 {lat: 37.5431697, lng: 127.0532964, name: '세터', date: '5/10 ~ 6/3'},
-                
             ];
 
             locations.forEach(function(loc) {
@@ -157,7 +156,7 @@
 
                 var label = document.createElement('div');
                 label.className = 'marker-label';
-                label.innerHTML = ${loc.name}<br>${loc.date};
+                label.innerHTML = `${loc.name}<br>${loc.date}`;
                 document.body.appendChild(label);
 
                 var showLabel = function(e) {
