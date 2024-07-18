@@ -183,13 +183,13 @@
             });
 
             var kakaoLocations = [
-                {lat: 37.543530, lng: 127.051973},
-                {lat: 37.541203, lng: 127.059425},
-                {lat: 37.543669, lng: 127.056881},
-                {lat: 37.544250, lng: 127.054906},
-                {lat: 37.543549, lng: 127.054552},
-                {lat: 37.542759, lng: 127.054185},
-                {lat: 37.542411, lng: 127.053395},
+                {lat: 37.543530, lng: 127.051973, video: 'cjr2.mp4'},
+                {lat: 37.541203, lng: 127.059425, video: '37743676cf7f071bcbfc9686dc2bacf9220671ca68462b1a76977ea3 (1).mp4'},
+                {lat: 37.543669, lng: 127.056881, video: 'cjr2.mp4'},
+                {lat: 37.544250, lng: 127.054906, video: 'cjr2.mp4'},
+                {lat: 37.543549, lng: 127.054552, video: 'cjr2.mp4'},
+                {lat: 37.542759, lng: 127.054185, video: 'cjr2.mp4'},
+                {lat: 37.542411, lng: 127.053395, video: 'cjr2.mp4'},
             ];
 
             kakaoLocations.forEach(function(loc) {
@@ -206,7 +206,7 @@
                 naver.maps.Event.addListener(marker, 'click', function() {
                     var videoContainer = document.getElementById('videoContainer');
                     var videoPlayer = document.getElementById('videoPlayer');
-                    videoPlayer.src = './cjr2.mp4';
+                    videoPlayer.src = './' + loc.video;
                     videoContainer.style.display = 'block';
                     videoPlayer.play();
                 });
@@ -260,4 +260,5 @@
     </div>
 </body>
 </html>
+
 
