@@ -23,6 +23,7 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1001;
+            cursor: pointer; /* 로고 클릭 가능하게 커서 추가 */
         }
         .custom-icon, .kakao-icon {
             width: 66.5px; /* 원본 비율을 유지한 크기 조정 */
@@ -245,6 +246,16 @@
             document.addEventListener('mouseup', function () {
                 isDragging = false;
                 videoContainer.style.cursor = 'default';
+            });
+
+            // 로고 클릭 시 비디오 재생 이벤트 추가
+            var logo = document.getElementById('logo');
+            logo.addEventListener('click', function () {
+                var videoContainer = document.getElementById('videoContainer');
+                var videoPlayer = document.getElementById('videoPlayer');
+                videoPlayer.src = './1942d1a1559274c1e48ef3761219b6009538d928bf3f818e2cf40a1c (online-video-cutter.com) (1).mp4';
+                videoContainer.style.display = 'block';
+                videoPlayer.play();
             });
         });
     </script>
