@@ -144,6 +144,8 @@
                 {lat: 37.5431697, lng: 127.0532964, name: '세터', date: '5/10 ~ 6/3'},
             ];
 
+            var labels = [];
+
             locations.forEach(function(loc) {
                 var marker = new naver.maps.Marker({
                     position: new naver.maps.LatLng(loc.lat, loc.lng),
@@ -159,13 +161,9 @@
                 label.className = 'marker-label';
                 label.innerHTML = `${loc.name}<br>${loc.date}`;
                 document.body.appendChild(label);
+                labels.push({label: label, marker: marker});
 
-                var showLabel = function(e) {
-                    var markerPosition = e.overlay.getPosition();
-                    var projection = map.getProjection();
-                    var point = projection.fromCoordToOffset(markerPosition);
-                    label.style.left = (point.x - label.offsetWidth / 2) + 'px';
-                    label.style.top = (point.y - 40) + 'px'; // 아이콘 바로 위에 표시
+                var showLabel = function() {
                     label.style.display = 'block';
                 };
 
@@ -182,6 +180,20 @@
 
                 label.addEventListener('mouseout', hideLabel);
             });
+
+            function updateLabelPosition() {
+                labels.forEach(function(item) {
+                    var markerPosition = item.marker.getPosition();
+                    var projection = map.getProjection();
+                    var point = projection.fromCoordToOffset(markerPosition);
+                    item.label.style.left = (point.x - item.label.offsetWidth / 2) + 'px';
+                    item.label.style.top = (point.y - 40) + 'px'; // 아이콘 바로 위에 표시
+                });
+            }
+
+            naver.maps.Event.addListener(map, 'idle', updateLabelPosition);
+            naver.maps.Event.addListener(map, 'zoom_changed', updateLabelPosition);
+            updateLabelPosition();
 
             var kakaoLocations = [
                 {lat: 37.543530, lng: 127.051973, video: 'cjr2.mp4'},
@@ -271,5 +283,3 @@
     </div>
 </body>
 </html>
-
-
